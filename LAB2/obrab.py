@@ -11,10 +11,10 @@ os.system(nfcom)
 def sum_traf(k, Q):
     return Q * k
 
-def graph(times, values, format=None):
+def graph(times, values):
     fig, ax = mpl.subplots(figsize=[15,5])
     ax.plot(times, values)
-    DF = DateFormatter(format if format is not None else "%H:%M:%S")
+    DF = DateFormatter("%H:%M:%S")
     ax.xaxis.set_major_formatter(DF)
     mpl.title('Зависимость объема трафика от времени')
     mpl.xlabel('Время')

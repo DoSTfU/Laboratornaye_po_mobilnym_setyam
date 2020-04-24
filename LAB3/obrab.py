@@ -1,7 +1,7 @@
 from fpdf import FPDF
 from num2words import num2words
 import datetime
-import sys
+import math
 import os
 
 maximun_shirina = 210
@@ -143,10 +143,27 @@ def jobs (pdf: FPDF, goods, **kwargs):
         pdf.multi_cell(col2_w, 5, good['Job'])
         pdf.set_y(height)
         pdf.cell(10 + col1_w + col2_w)
-        pdf.cell(col3_w, 5, f'{good["VSEGO"]}{" " + good["VSEGO_unit"] if "VSEGO_unit" in good else ""}', align='L')
-        pdf.cell(col4_w, 5, f'{good["Koef"]} {"p/" + good["VSEGO_unit"] if "VSEGO_unit" in good else "p"}', align='L')
-        pdf.cell(col5_w, 5, f'{good["Koef"] * good["VSEGO"]} р', align='R')
-        total += good["Koef"] * good["VSEGO"]
+        pdf.cell(col3_w, 5, f'{math.ceil(good["VSEGO"])}{" " + good["VSEGO_unit"] if "VSEGO_unit" in good else ""}', align='L')
+        pdf.cell(col4_w, 5, f'{math.ceil(good["Koef"])} {"p/" + good["VSEGO_unit"] if "VSEGO_unit" in good else "p"}', align='L')
+        if good['Job'] == 'СМС':
+            pdf.cell(col5_w, 5, f'{math.ceil(good["Koef"]) * math.ceil(good["VSEGO"]) - 50} р', align='R')
+            total += math.ceil(good["Koef"]) * math.ceil(good["VSEGO"]) - 50
+            height += 5 * len(pdf.multi_cell(col2_w, 100, good['Job'], split_only=True))
+            pdf.line(Coord, height + 1, maximun_shirina - Coord, height + 1)
+            height += 2
+            continue
+        if good['Job'] == 'Исходящие вызовы':
+            if good['VSEGO'] > 20:
+                pdf.cell(col5_w, 5, f'{20} р', align='R')
+                total += 20
+                height += 5 * len(pdf.multi_cell(col2_w, 100, good['Job'], split_only=True))
+                pdf.line(Coord, height + 1, maximun_shirina - Coord, height + 1)
+                height += 2
+                continue
+        pdf.cell(col5_w, 5, f'{math.ceil(good["Koef"]) * math.ceil(good["VSEGO"])} р', align='R')
+
+
+        total += math.ceil(good["Koef"]) * math.ceil(good["VSEGO"])
 
         height += 5 * len(pdf.multi_cell(col2_w, 100, good['Job'], split_only=True))
         if not is_last:

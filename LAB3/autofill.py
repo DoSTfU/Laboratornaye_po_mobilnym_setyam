@@ -37,7 +37,7 @@ height = jobs(pdf, [
         'VSEGO': 110.44,
         'VSEGO_unit': 'мин.',
         'Number': '',
-        'Koef': 0,
+        'Koef': 4,
     }, {
         'Job': 'Исходящие вызовы',
         'VSEGO': 83.22,
@@ -49,19 +49,19 @@ height = jobs(pdf, [
         'VSEGO': 73,
         'VSEGO_unit': 'шт.',
         'Number': '',
-        'Koef': 1,
+        'Koef': 5,
     }, {
         'Job': 'Исходящий трафик',
         'VSEGO': 18.28,
         'VSEGO_unit': 'Kб',
         'Number': '',
-        'Koef': 0.5,
+        'Koef': 1.5,
     }, {
         'Job': 'Входящий трафик',
         'VSEGO': 39.45,
         'VSEGO_unit': 'Kб',
         'Number': '',
-        'Koef': 0.5,
+        'Koef': 1.5,
     },
 ], height=height)
 
